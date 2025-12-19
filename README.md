@@ -62,11 +62,11 @@ Knowledge of [BibTool](http://www.gerd-neugebauer.de/software/TeX/BibTool/en/) a
 
 Avoid submitting duplicates or incomplete bibliometric entries. 
 
-Process and clean a BibTeX file using `bibtool` with custom resource rules.
+Process and clean a BibTeX file using `bibtool` with custom resource rules, if you have the skills. 
 
 ```sh
 bibtool -v -d -k -r bibtoolrsc.rsc -F [in file] -o [out file]
-´´
+``` 
 
 ## License
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.txt)
