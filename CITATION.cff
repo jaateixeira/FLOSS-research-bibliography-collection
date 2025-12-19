@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this bibliography, please cite it as:"
+title: "FLOSS Research Bibliography Collection"
+authors:
+  - family-names: "Apolinário Teixeira"
+    given-names: "José"
+version: 1.0.0
+# doi: 10.5281/zenodo.XXXXXX  # If you get a DOI
+date-released: 19-Dec-2025
+repository-code: "https://github.com/jaateixeira/FLOSS-research-bibliography-collection"
