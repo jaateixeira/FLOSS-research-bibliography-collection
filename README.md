@@ -82,7 +82,72 @@ Simply download individual .bib files and use them.
 - **JabRef**: Native .bib support
 
 ## Statistics
-[Add counts of entries per file, most cited papers, etc.]
+
+- **Total curated publications:** 169
+
+### Publication Types
+- `article`: 119
+- `inproceedings`: 40
+- `book`: 5
+- `incollection`: 3
+- `inbook`: 2
+
+### Top 10 Authors
+| Rank | Author | Count |
+|------|--------|-------|
+| 1 | Fitzgerald, Brian | 11 |
+| 2 | Crowston, Kevin  | 8 |
+| 3 | A. Bosu | 7 |
+| 4 | Howison, James | 5 |
+| 6 | K. Z. Sultana | 4 |
+| 7 | Robles, Gregorio | 4 |
+| 8 | Feller, Joseph | 4 |
+| 9 | Georg von Krogh | 4 |
+| 10 | James Howison | 3 |
+
+### Top 10 Journals
+| Rank | Journal | Count |
+|------|---------|-------|
+| 1 | MIS Quarterly | 8 |
+| 2 | Information Systems Research | 7 |
+| 3 | Management Science | 7 |
+| 4 | Research Policy | 6 |
+| 5 | Information and Software Technology | 5 |
+| 6 | Journal of Strategic Information Systems | 4 |
+| 7 | First Monday | 4 |
+| 8 | IEEE Transactions on Software Engineering | 3 |
+| 9 | Empirical Software Engineering | 3 |
+| 10 | Journal of the American Society for Information Science
+and Technology | 3 |
+
+### Top 10 Conferences
+| Rank | Conference | Count |
+|------|------------|-------|
+| 1 | 2019 IEEE 26th International Conference on Software Analysis, Evolution and Reengineering (SANER) | 3 |
+| 2 | the 38th Annual Hawaii International Conference on System Sciences | 3 |
+| 3 | the 8th ACM/IEEE International Symposium on Empirical Software Engineering and Measurement | 2 |
+| 4 | the European Conference on Information Systems (ECIS 2006) | 2 |
+| 5 | Proceeding of the 40th International Conference on Information Systems (ICIS 2019) | 2 |
+| 6 | Open Source Systems: Long-Term Sustainability | 2 |
+| 7 | the International Conference on Information Systems (ICIS 2010) | 2 |
+| 8 | 2019 ACM/IEEE International Symposium on Empirical Software Engineering and Measurement (ESEM) | 1 |
+| 9 | the International Conference on Information Systems (ICIS 2017) | 1 |
+| 10 | The International Symposium on Open Collaboration | 1 |
+
+### Publication Years (Top 10)
+| Rank | Year | Count |
+|------|------|-------|
+| 1 | 2006 | 20 |
+| 2 | 2014 | 14 |
+| 3 | 2005 | 12 |
+| 4 | 2017 | 11 |
+| 5 | 2007 | 10 |
+| 6 | 2012 | 9 |
+| 7 | 2019 | 8 |
+| 8 | 2013 | 8 |
+| 9 | 2009 | 7 |
+| 10 | 2010 | 7 |
+
 
 ## Contributing to the project: 
 Fork the project, clone, branch and push. See [Contributing to a project by GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project). 
