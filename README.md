@@ -2,7 +2,7 @@
 
 A curated collection of bibliographic references on Free/Libre Open Source Software research, organized by topic. 
 Curated by [Jose Teixeira](http://www.jteixeira.eu/) during his doctoral studies on ["Coopetition in an open-source way"](http://www.jteixeira.eu/dissertation/diss.pdf) in Information Systems at the University of Turku, Finland. 
-They were intended for personal use, but they are now shared with others mapping the current state of the art of research in open-source software. 
+They were intended for personal use, but are now in the public domain to facilitate mapping the current state of the art in open-source software research in a collaborative way. 
 
 ## Motivation 
 
@@ -24,16 +24,16 @@ They were intended for personal use, but they are now shared with others mapping
 
 ## Format, files and topics.
 
-The references are organized in bibliography database files (.bib files) by topic. 
-The follow the BibTeX bibliographic flat-file database file format that is widely used by standard with broad support by reference management software (e.g., JabRed, Mendeley, Zotero, Google Scholar). 
+The references are organised in bibliography database files (.bib files) by topic. 
+The following bibliographic flat-file database files follow the BibTeX format. The standard is widely used and supported by reference management software (e.g., JabRef, Mendeley, Zotero, Google Scholar). 
 
-- [**floss.bib**](floss.bib) - General FLOSS research. Special issues are annotated. Top journals in Software Enginnering, Information Systems, Management and Innovation Studies are widely covered.  
+- [**floss.bib**](floss.bib) - General FLOSS research. Special issues are annotated. Top journals in Software Engineering, Information Systems, Management and Innovation Studies are widely covered.  
   
-- [**floss-coordination.bib**](floss-coordination.bib) - Studies of coordination and collaboration in FLOSS. Used on studies of coordination, collaboration and competition in the  [TensorFlow](https://users.aalto.fi/~apolinj2/tensorflowsna/), [Automotive Grade Linuyx](https://users.aalto.fi/~apolinj2/autogradelinuxsna/), OpenStack, Linux, Koha, WebKit software ecosystems by [Jose Teixeira](http://www.jteixeira.eu/). 
+- [**floss-coordination.bib**](floss-coordination.bib) - Studies of coordination and collaboration in FLOSS. Used on studies of coordination, collaboration and competition in the  [TensorFlow](https://users.aalto.fi/~apolinj2/tensorflowsna/), [Automotive Grade Linux](https://users.aalto.fi/~apolinj2/autogradelinuxsna/), OpenStack, Linux, Koha, WebKit software ecosystems by [Jose Teixeira](http://www.jteixeira.eu/). 
 - [**floss-diversity.bib**](floss-diversity.bib) - Diversity, Inclusiveness and inclusion in FLOSS communities. 
-- [**floss-fission.bib**](floss-fission.bib) - Forking, slitting, conflic and community shisms in FLOSS comunnities. 
+- [**floss-fission.bib**](floss-fission.bib) - Forking, division, conflict and community schisms in FLOSS communities. 
 - [**floss-gender.bib**](floss-gender.bib) - Gender studies in FLOSS. 
-- [**floss-lis.bib**](floss-lis.bib) - Library and Information Science perspectives. Used by by [Jose Teixeira](http://www.jteixeira.eu/) to study the [Koha](https://koha-community.org/) library system. 
+- [**floss-lis.bib**](floss-lis.bib) - Library and Information Science perspectives. Used by [Jose Teixeira](http://www.jteixeira.eu/) to study the [Koha](https://koha-community.org/) library system. 
 - [**floss-motivations.bib**](floss-motivations.bib) - Developer and company motivations for open-sourcing. 
 - [**floss-peer-review.bib**](floss-peer-review.bib) - Peer review  (aka code reviews) in FLOSS research. 
 - [**floss-sna.bib**](floss-sna.bib) - Social Network Analysis of FLOSS communities.
@@ -41,8 +41,8 @@ The follow the BibTeX bibliographic flat-file database file format that is widel
 
 ## Usage
 
-### Direct Use
-Download individual .bib files and use them. 
+### Directly 
+Simply download individual .bib files and use them. 
 
 
 ### With Reference Managers
