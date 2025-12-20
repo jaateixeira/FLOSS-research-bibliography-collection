@@ -54,10 +54,11 @@ Download individual .bib files and use them.
 ## Statistics
 [Add counts of entries per file, most cited papers, etc.]
 
-## Contributing
-Follow the regular Git path. First clone or fork, the edit, and commit. 
+## Contributing to the project: 
+Fork the project, clone, branch and push. See [Contributing to a project by GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project). 
 
-Then if you want to keep this alive and help maintaining this map of the current state of the art of research in open-source software,  Send a pull request on GitHub and I will merge after testing.  
+Then, if you want to keep this alive and help tp maintain this map of the current state of the art of research in open-source software, send a pull request on GitHub, and it will be merged after testing.  
+
 Knowledge of [BibTool](http://www.gerd-neugebauer.de/software/TeX/BibTool/en/) and [BibTeX Tidy](https://flamingtempura.github.io/bibtex-tidy/index.html) will not hurt. 
 
 Avoid submitting duplicates or incomplete bibliometric entries. 
@@ -70,4 +71,4 @@ bibtool -v -d -k -r bibtoolrsc.rsc -F [in file] -o [out file]
 
 ## License
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.txt)
-Pick items as you wish. Cite or atribute if using any of the files as a whole. 
+Pick items as you wish. Cite or attribute if using any of the files as a whole. 
