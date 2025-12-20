@@ -149,10 +149,9 @@ and Technology | 3 |
 
 ## Relational Social Network Analysis based on all the bibliographic collection .bib files
 ### Network Visualization
-[![Small Network Preview](coauthorship_coauthorship_network.png)](coauthorship_coauthorship_network.png)
 
 <!-- With custom size -->
-[<img src="coauthorship_coauthorship_network.png" alt="Network" width="300">](coauthorship_coauthorship_network.png)
+[<img src="coauthorship_coauthorship_network.png" alt="Network" width="%50;">](coauthorship_coauthorship_network.png)
 
 See [coauthorship_coauthorship_report.md](https://github.com/jaateixeira/FLOSS-research-bibliography-collection/blob/main/coauthorship_coauthorship_report.md) for a bibliometric report from a network perspective (i.e. more interested in relations than quantities). 
 
