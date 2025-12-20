@@ -148,6 +148,10 @@ and Technology | 3 |
 | 9 | 2009 | 7 |
 | 10 | 2010 | 7 |
 
+## Relational Social Network Analysis based on all the bibliographic collection .bib files
+[![Network Thumbnail](coauthorship_coauthorship_network.png](coauthorship_coauthorship_network.png)
+*Click to view full resolution image*
+
 
 ## Contributing to the project: 
 Fork the project, clone, branch and push. See [Contributing to a project by GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project). 
