@@ -123,25 +123,16 @@ and Technology | 3 |
 ### Top 10 Conferences
 | Rank | Conference | Count |
 |------|------------|-------|
-| 1 | 2019 IEEE 26th International Conference on Software
-Analysis, Evolution and Reengineering (SANER) | 3 |
-| 2 | the 38th Annual Hawaii International
-Conference on System Sciences | 3 |
-| 3 | the 8th ACM/IEEE International Symposium on
-Empirical Software Engineering and Measurement | 2 |
-| 4 | the European Conference on Information
-Systems (ECIS 2006) | 2 |
-| 5 | Proceeding of the 40th International Conference on
-Information Systems (ICIS 2019) | 2 |
+| 1 | 2019 IEEE 26th International Conference on Software Analysis, Evolution and Reengineering (SANER) | 3 |
+| 2 | the 38th Annual Hawaii International Conference on System Sciences | 3 |
+| 3 | the 8th ACM/IEEE International Symposium on Empirical Software Engineering and Measurement | 2 |
+| 4 | the European Conference on Information Systems (ECIS 2006) | 2 |
+| 5 | Proceeding of the 40th International Conference on Information Systems (ICIS 2019) | 2 |
 | 6 | Open Source Systems: Long-Term Sustainability | 2 |
-| 7 | the International Conference on Information
-Systems (ICIS 2010) | 2 |
-| 8 | 2019 ACM/IEEE International Symposium on Empirical
-Software Engineering and Measurement (ESEM) | 1 |
-| 9 | the International Conference on Information
-Systems (ICIS 2017) | 1 |
-| 10 | The International Symposium on Open
-Collaboration | 1 |
+| 7 | the International Conference on Information Systems (ICIS 2010) | 2 |
+| 8 | 2019 ACM/IEEE International Symposium on Empirical Software Engineering and Measurement (ESEM) | 1 |
+| 9 | the International Conference on Information Systems (ICIS 2017) | 1 |
+| 10 | The International Symposium on Open Collaboration | 1 |
 
 ### Publication Years (Top 10)
 | Rank | Year | Count |
