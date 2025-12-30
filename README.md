@@ -2,36 +2,37 @@
 
 A curated collection of bibliographic references on Free/Libre Open Source Software research, organised by topic in flat files. 
 Curated by [Jose Teixeira](http://www.jteixeira.eu/) during his doctoral studies on ["Coopetition in an open-source way"](http://www.jteixeira.eu/dissertation/diss.pdf) in Information Systems at the University of Turku, Finland. 
-This collection was intended for personal use, but is now in the public domain to facilitate mapping the current state of the art in open-source software research in a morecollaborative way. 
+This collection was originally intended for personal use but is now in the public domain to facilitate a more collaborative mapping of the current state of the art in open-source software research, thereby reducing the duplication of efforts among researchers on the topic.
+
 
 
           ________________________________________
          /                                       /|
         /_______________________________________/ |
        |                                       |  |
-       |  FLOSS Research Literature            |  |
+       |      FLOSS Research Literature        |  |
        |                                       |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │  Free Libre Open Source     │      |  |
-       |  └─────────────────────────────┘      |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │ Coordination & collaboration│      |  |
-       |  └─────────────────────────────┘      |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │    Diversity & Gender       │      |  |
-       |  └─────────────────────────────┘      |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │     Commonity fission       │      |  |
-       |  └─────────────────────────────┘      |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │        Motivations          │      |  |
-       |  └─────────────────────────────┘      |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │        Peer review          │      |  |
-       |  └─────────────────────────────┘      |  |
-       |  ┌─────────────────────────────┐      |  |
-       |  │ Social Network Analysis     │      |  |
-       |  └─────────────────────────────┘      | /
+       |   ┌─────────────────────────────┐     |  |
+       |   │  Free Libre Open Source     │     |  |
+       |   └─────────────────────────────┘     |  |
+       |   ┌─────────────────────────────┐     |  |
+       |   │ Coordination & collaboration│     |  |
+       |   └─────────────────────────────┘     |  |
+       |   ┌─────────────────────────────┐     |  |
+       |   │    Diversity & Gender       │     |  |
+       |   └─────────────────────────────┘     |  |
+       |   ┌─────────────────────────────┐     |  |
+       |   │     Commonity fission       │     |  |
+       |   └─────────────────────────────┘     |  |
+       |   ┌─────────────────────────────┐     |  |
+       |   │        Motivations          │     |  |
+       |   └─────────────────────────────┘     |  |
+       |   ┌─────────────────────────────┐     |  |
+       |   │        Peer review          │     |  |
+       |   └─────────────────────────────┘     |  |
+       |   ┌─────────────────────────────┐     |  |
+       |   │ Social Network Analysis     │     |  |
+       |   └─────────────────────────────┘     | /
        |_______________________________________|/
 
 
@@ -51,6 +52,21 @@ The following bibliographic flat-file database files follow the BibTeX format. T
 - [**floss-peer-review.bib**](floss-peer-review.bib) - Peer review  (aka code reviews) in FLOSS research. 
 - [**floss-sna.bib**](floss-sna.bib) - Social Network Analysis of FLOSS communities.
 - [**bibtoolrsc.rsc**](bibtoolrsc.rsc) -  Configuration file to style and generate citation keys.
+
+## Notations 
+
+Several comments are used to annotate a BibTeX entry.  For example, if a entry have a  entry with comment = {AIS_basket_11, special_issue, literature_review} it denotes that the entry refers to a literature review article published in a premier Information Systems journal, on a edited special issue. 
+
+### Notations on the prestige of the publication outlet 
+[FT50] - [50 academic and practitioner journals used by the Financial Times to rank faculty research in MBA, EMBA, and online MBA programs](https://guides.lib.purdue.edu/ft50)
+[AIS_basket_11] - [AIS basket of 11 premier IS journals](https://aisnet.org/page/SeniorScholarListofPremierJournals)
+[A*]  -[ Excellent conference according to CORE (Computing Research and Education Association of Australasia) rankings](https://www.core.edu.au/icore-portal) 
+
+###  Notation on the nature of the article 
+[special_issue] - Special issue
+[literature_review] - Review of literature 
+[systematic_literature_review] - Systematic review of literature 
+
 
 ## Motivation 
 
