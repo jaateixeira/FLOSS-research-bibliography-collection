@@ -97,6 +97,30 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 *Science*
 *Nature*
 
+- [TOP_SE_J] **Top Software Engineering Journals:**
+
+*IEEE Transactions on Software Engineering*  
+*Journal of Systems and Software*  
+*ACM Transactions on Software Engineering and Methodology*  
+*Empirical Software Engineering*  
+*Software: Practice and Experience*  
+*IEEE Software*  
+*Software and Systems Modeling*  
+*Journal of Software: Evolution and Process*  
+*Information and Software Technology*
+
+- [TOP_SE_J] **Top Software Engineering Conferences:**
+
+*ACM/IEEE International Conference on Software Engineering (ICSE)*  
+*ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE)*  
+*IEEE/ACM International Conference on Automated Software Engineering (ASE)*  
+*ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI)*  
+*International Symposium on Software Testing and Analysis (ISSTA)*  
+*Mining Software Repositories (MSR)*  
+*Symposium on Operating Systems Principles (SOSP)*  
+*International Conference on Software Analysis, Evolution, and Reengineering (SANER)*  
+*IEEE International Conference on Software Maintenance and Evolution (ICSME)*  
+*Proceedings of the ACM on Programming Languages (PACMPL)*
 ## Motivation 
 
  Motivations for releasing to the public domain this curated bibliometric collection include: 
