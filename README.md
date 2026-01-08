@@ -60,9 +60,10 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 
 
 ###  Notation on the nature of the article 
-- [special_issue] - Special issue p
+- [special_issue] - Special issue paper
+- [special_issue_editorial] - Special issue editorial
 - [literature_review] - Review of literature  
-- [systematic_literature_review] - Systematic review of literatur
+- [systematic_literature_review] - Systematic review of literature
 - [mixed_methods] - Mixed or multi methods
 - [long] Longitudinal or panel data
 - [meta] - Meta-study  paper 
@@ -73,7 +74,10 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 - [new_theory] - Claims a new theory
 - [floss_case_study] - Case study on FLOSS adoption or adoption
 - [teaching_value] - With significant value to be used in teaching
-- [tech_solution] - Describes the technical implementation of a solution for a known real world problem 
+- [tech_solution] - Describes the technical implementation of a solution for a known real world problem
+- [book] - It's actually a book
+- [edited_volume] - It's actually a edited research book
+- [book_chapter] - It's actually a book chapter  Democratizing Innovation
 
 
 ### Notations on the prestige of the article 
@@ -86,62 +90,119 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 ### Notations on the prestige of the publication outlet 
 - [FT50] - **50 academic and practitioner journals used by the Financial Times to rank faculty research at business schools**
   See [https://guides.lib.purdue.edu/ft50](https://guides.lib.purdue.edu/ft50)
+
+  Here is the list formatted as an italicized Markdown list suitable for a GitHub `README.md` file:
+
+*   *Academy of Management Journal*
+*   *Academy of Management Review*
+*   *Accounting, Organizations and Society*
+*   *Accounting Review*
+*   *Administrative Science Quarterly*
+*   *American Economic Review*
+*   *Contemporary Accounting Research*
+*   *Econometrica*
+*   *Entrepreneurship Theory and Practice*
+*   *Harvard Business Review*
+*   *Human Relations*
+*   *Human Resource Management*
+*   *Information Systems Research*
+*   *Journal of Accounting & Economics*
+*   *Journal of Accounting Research*
+*   *Journal of Applied Psychology*
+*   *Journal of Business Ethics*
+*   *Journal of Business Venturing*
+*   *Journal of Consumer Psychology*
+*   *Journal of Consumer Research*
+*   *Journal of Finance*
+*   *Journal of Financial and Quantitative Analysis*
+*   *Journal of Financial Economics*
+*   *Journal of International Business Studies*
+*   *Journal of Management*
+*   *Journal of Management Information Systems*
+*   *Journal of Management Studies*
+*   *Journal of Marketing*
+*   *Journal of Marketing Research*
+*   *Journal of Operations Management*
+*   *Journal of the Academy of Marketing Science*
+*   *Management Science*
+*   *Manufacturing and Service Operations Management*
+*   *Marketing Science*
+*   *MIS Quarterly*
+*   *MIT Sloan Management Review*
+*   *Operations Research*
+*   *Organization Science*
+*   *Organization Studies*
+*   *Organizational Behavior and Human Decision Processes*
+*   *Production and Operations Management*
+*   *Quarterly Journal of Economics*
+*   *Research Policy*
+*   *Review of Accounting Studies*
+*   *Review of Economic Studies*
+*   *Review of Finance*
+*   *Review of Financial Studies*
+*   *Strategic Entrepreneurship Journal*
+*   *Strategic Management Journal*
+
+You can copy and paste this block directly into your `README.md` file.
 -  [A*]  - **Excellent conference according to CORE (Computing Research and Education Association of Australasia) rankings**
   See [https://www.core.edu.au/icore-portal](https://www.core.edu.au/icore-portal)
 - [AIS_basket_11] - **AIS basket of 11 premier IS journals**
   See [https://aisnet.org/page/SeniorScholarListofPremierJournals)(https://aisnet.org/page/SeniorScholarListofPremierJournals)
 
 
-*Decision Support Systems*  
-*European Journal of Information Systems*  
-*Information & Management*  
-*Information and Organization*  
-*Information Systems Journal*  
-*Information Systems Research*  
-*Journal of the Association for Information Systems (JAIS)*  
-*Journal of Information Technology*  
-*Journal of Management Information Systems (JMIS)*  
-*Journal of Strategic Information Systems*  
-*MIS Quarterly*
+*   *Decision Support Systems*  
+*   *European Journal of Information Systems*  
+*   *Information & Management*  
+*   *Information and Organization*  
+*   *Information Systems Journal*  
+*   *Information Systems Research*  
+*   *Journal of the Association for Information Systems (JAIS)*  
+*   *Journal of Information Technology*  
+*   *Journal of Management Information Systems (JMIS)*  
+*   *Journal of Strategic Information Systems*  
+*   *MIS Quarterly*
 
 - [TOP_SNA] **Top Network Analysis Journals:**
 
 
-*American Sociological Review*  
-*Network Science*  
-*American Journal of Sociology*  
-*Social Forces*  
-*Sociological Science*  
-*Proceedings of the National Academy of Sciences (PNAS)*  
-*Connections*  
-*Science*  
-*Nature*
+*   *American Sociological Review*  
+*   *Network Science*  
+*   *American Journal of Sociology*  
+*   *Social Forces*  
+*   *Sociological Science*  
+*   *Proceedings of the National Academy of Sciences (PNAS)*  
+*   *Connections*  
+*   *Science*  
+*   *Nature*
 
 - [TOP_SE_J] **Top Software Engineering Journals:**
 
-*IEEE Transactions on Software Engineering*  
-*Journal of Systems and Software*  
-*ACM Transactions on Software Engineering and Methodology*  
-*Empirical Software Engineering*  
-*Software: Practice and Experience*  
-*IEEE Software*  
-*Software and Systems Modeling*  
-*Journal of Software: Evolution and Process*  
-*Information and Software Technology*
+*   *IEEE Transactions on Software Engineering*  
+*   *Journal of Systems and Software*  
+*   *ACM Transactions on Software Engineering and Methodology*  
+*   *Empirical Software Engineering*  
+*   *Software: Practice and Experience*  
+*   *IEEE Software*  
+*   *Software and Systems Modeling*  
+*   *Journal of Software: Evolution and Process*  
+*   *Information and Software Technology*
 
-- [TOP_SE_J] **Top Software Engineering Conferences:**
+- [TOP_SE_C] **Top Software Engineering Conferences:**
 
-*ACM/IEEE International Conference on Software Engineering (ICSE)*  
-*ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE)*  
-*IEEE/ACM International Conference on Automated Software Engineering (ASE)*  
-*ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI)*  
-*International Symposium on Software Testing and Analysis (ISSTA)*  
-*Mining Software Repositories (MSR)*  
-*Symposium on Operating Systems Principles (SOSP)*  
-*International Conference on Software Analysis, Evolution, and Reengineering (SANER)*  
-*IEEE International Conference on Software Maintenance and Evolution (ICSME)*  
-*Proceedings of the ACM on Programming Languages (PACMPL)*
+*   *ACM/IEEE International Conference on Software Engineering (ICSE)*  
+*   *ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE)*  
+*   *IEEE/ACM International Conference on Automated Software Engineering (ASE)*  
+*   *ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI)*  
+*   *International Symposium on Software Testing and Analysis (ISSTA)*  
+*   *Mining Software Repositories (MSR)*  
+*   *Symposium on Operating Systems Principles (SOSP)*  
+*   *International Conference on Software Analysis, Evolution, and Reengineering (SANER)*  
+*   *IEEE International Conference on Software Maintenance and Evolution (ICSME)*  
+*   *Proceedings of the ACM on Programming Languages (PACMPL)*
 
+- [TOP_IS_C] **Top Information Systems Conferences:**
+*   *International Conference on Information Systems*
+*   *European Conference on Information Systems* 
 
 ## Usage
 
