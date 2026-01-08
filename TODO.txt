@@ -1,3 +1,4 @@
+Fix conference entries so they are consistent
 Create a report folder 
 Point readme to the report
 Add statistics script
