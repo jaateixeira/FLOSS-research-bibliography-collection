@@ -187,7 +187,7 @@ You can copy and paste this block directly into your `README.md` file.
 *   *Journal of Software: Evolution and Process*  
 *   *Information and Software Technology*
 
-- [TOP_SE_J] **Top Software Engineering Conferences:**
+- [TOP_SE_C] **Top Software Engineering Conferences:**
 
 *   *ACM/IEEE International Conference on Software Engineering (ICSE)*  
 *   *ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE)*  
@@ -200,6 +200,9 @@ You can copy and paste this block directly into your `README.md` file.
 *   *IEEE International Conference on Software Maintenance and Evolution (ICSME)*  
 *   *Proceedings of the ACM on Programming Languages (PACMPL)*
 
+- [TOP_IS_C] **Top Information Systems Conferences:**
+*   * International Conference on Information Systems*
+*   * European Conference on Information Systems* 
 
 ## Usage
 
