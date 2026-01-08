@@ -60,9 +60,10 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 
 
 ###  Notation on the nature of the article 
-- [special_issue] - Special issue p
+- [special_issue] - Special issue paper
+- [special_issue_editorial] - Special issue editorial
 - [literature_review] - Review of literature  
-- [systematic_literature_review] - Systematic review of literatur
+- [systematic_literature_review] - Systematic review of literature
 - [mixed_methods] - Mixed or multi methods
 - [long] Longitudinal or panel data
 - [meta] - Meta-study  paper 
