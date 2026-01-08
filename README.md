@@ -74,7 +74,10 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 - [new_theory] - Claims a new theory
 - [floss_case_study] - Case study on FLOSS adoption or adoption
 - [teaching_value] - With significant value to be used in teaching
-- [tech_solution] - Describes the technical implementation of a solution for a known real world problem 
+- [tech_solution] - Describes the technical implementation of a solution for a known real world problem
+- [book] - It's actually a book
+- [edited_volume] - It's actually a edited research book
+- [book_chapter] - It's actually a book chapter  Democratizing Innovation
 
 
 ### Notations on the prestige of the article 
