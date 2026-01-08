@@ -18,19 +18,19 @@ This collection was originally intended for personal use but is now in the publi
        |   │ Coordination & collaboration│     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │    Diversity & Gender       │     |  |
+       |   │    Diversity & gender       │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │     Commonity fission       │     |  |
+       |   │     Community fission       │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
        |   │        Motivations          │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │        Peer review          │     |  |
+       |   │  Peer review / code reviews │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │ Social Network Analysis     │     |  |
+       |   │   Social Network Analysis   │     |  |
        |   └─────────────────────────────┘     | /
        |_______________________________________|/
 ```
