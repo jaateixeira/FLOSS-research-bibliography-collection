@@ -201,8 +201,8 @@ You can copy and paste this block directly into your `README.md` file.
 *   *Proceedings of the ACM on Programming Languages (PACMPL)*
 
 - [TOP_IS_C] **Top Information Systems Conferences:**
-*   * International Conference on Information Systems*
-*   * European Conference on Information Systems* 
+*   *International Conference on Information Systems*
+*   *European Conference on Information Systems* 
 
 ## Usage
 
