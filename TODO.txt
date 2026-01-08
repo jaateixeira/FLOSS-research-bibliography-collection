@@ -1,3 +1,5 @@
+Create a report folder 
+Point readme to the report
 Add statistics script
 Add Zenodo profile
 Promote to open-source researchers
