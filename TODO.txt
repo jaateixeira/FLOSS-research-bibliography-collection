@@ -2,3 +2,4 @@ Add statistics script
 Add Zenodo profile
 Promote to open-source researchers
 Maintain maillist of active open-source researchers
+TEST
