@@ -18,19 +18,19 @@ This collection was originally intended for personal use but is now in the publi
        |   │ Coordination & collaboration│     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │    Diversity & Gender       │     |  |
+       |   │    Diversity & gender       │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │     Commonity fission       │     |  |
+       |   │     Community fission       │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
        |   │        Motivations          │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │        Peer review          │     |  |
+       |   │  Peer review / code reviews │     |  |
        |   └─────────────────────────────┘     |  |
        |   ┌─────────────────────────────┐     |  |
-       |   │ Social Network Analysis     │     |  |
+       |   │   Social Network Analysis   │     |  |
        |   └─────────────────────────────┘     | /
        |_______________________________________|/
 ```
@@ -204,6 +204,10 @@ You can copy and paste this block directly into your `README.md` file.
 *   *International Conference on Information Systems*
 *   *European Conference on Information Systems* 
 
+- [TOP_M_C] **Top Managment Conferences:**
+*   *Academy Of Management Proceedings*
+*   *European Academy of Management (EURAM) Conference*
+*   *Strategic Management Society (SMS) Annual International Conference*
 ## Usage
 
 ### Directly 
@@ -324,6 +328,13 @@ bibtool -v -d -k -r bibtoolrsc.rsc -F [in file] -o [out file]
 ```
 
 You can use the  [**format_all_bib_with_bibtool.sh**](format_all_bib_with_bibtool.sh) small bash script that formats and generate BibTeX keys for all .bib files in the directory using bibtool and the standard [**bibtoolrsc.rsc**](bibtoolrsc.rsc) configurations.
+
+### Style guide for BibTeX entries 
+
+- For the 'booktitle' entry of a ICIS conference use *Proceeding of the 40th International Conference on Information Systems (ICIS 2019)*. That way we keep track of edition and year. 
+- For the 'booktitle' entry of a ECIS conference use *Proceedings of the 33th European Conference on Information Systems (ECIS 2025)*. That way we keep track of edition and year. 
+- For the 'booktitle' entry of a SANER conference use *2021 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)*. That way we are consistent with the IEEE Xplore digital library.
+- For the 'booktitle' entry of a ICSE conference use *2023 IEEE/ACM 45th International Conference on SoftwareEngineering (ICSE)*. That way we are consistent with the IEEE Xplore digital library.
 
 ## License
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.txt)
