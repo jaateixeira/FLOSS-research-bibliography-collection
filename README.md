@@ -204,6 +204,10 @@ You can copy and paste this block directly into your `README.md` file.
 *   *International Conference on Information Systems*
 *   *European Conference on Information Systems* 
 
+- [TOP_M_C] **Top Managment Conferences:**
+*   *Academy Of Management Proceedings*
+*   *European Academy of Management (EURAM) Conference*
+*   *Strategic Management Society (SMS) Annual International Conference*
 ## Usage
 
 ### Directly 
