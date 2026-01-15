@@ -69,6 +69,7 @@ Several comments are used to annotate a BibTeX entry.  For example, if a entry h
 - [meta] - Meta-study  paper 
 - [design_science] - Design science paper 
 - [network_analysis] - Network analysis paper
+- [MSR] - Mining of Software Repositories paper 
 - [machine_learning] - Machine learning paper
 - [new_method] - Claims a new method
 - [new_theory] - Claims a new theory
