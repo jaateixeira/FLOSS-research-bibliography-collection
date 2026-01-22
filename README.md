@@ -53,6 +53,7 @@ The following bibliographic flat-file database files follow the BibTeX format. T
 - [**floss-sna.bib**](floss-sna.bib) - Social Network Analysis of FLOSS communities.
 - [**bibtoolrsc.rsc**](bibtoolrsc.rsc) -  Configuration file to style and generate citation keys.
 - [**format_all_bib_with_bibtool.sh**](format_all_bib_with_bibtool.sh) - Small bash script that formats and generate BibTeX keys for all .bib files in the directory using bibtool and standard configuration defined in [**bibtoolrsc.rsc**](bibtoolrsc.rsc).
+- - [**dependencies.sh**](dependencies.sh) - Small bash script that installs dependencies to maintain this bibliography database. So far installs bibtool on Linux, Mac and Windows. 
 
 ## Notations 
 
