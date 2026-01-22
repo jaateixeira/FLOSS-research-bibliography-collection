@@ -53,7 +53,7 @@ The following bibliographic flat-file database files follow the BibTeX format. T
 - [**floss-sna.bib**](floss-sna.bib) - Social Network Analysis of FLOSS communities.
 - [**bibtoolrsc.rsc**](bibtoolrsc.rsc) -  Configuration file to style and generate citation keys.
 - [**format_all_bib_with_bibtool.sh**](format_all_bib_with_bibtool.sh) - Small bash script that formats and generate BibTeX keys for all .bib files in the directory using bibtool and standard configuration defined in [**bibtoolrsc.rsc**](bibtoolrsc.rsc).
-- - [**dependencies.sh**](dependencies.sh) - Small bash script that installs dependencies to maintain this bibliography database. So far installs bibtool on Linux, Mac and Windows. 
+- [**dependencies.sh**](dependencies.sh) - Small bash script that installs dependencies to maintain this bibliography database. So far installs bibtool on Linux, Mac and Windows. 
 
 ## Notations 
 
@@ -319,7 +319,7 @@ Fork the project, clone, branch and push. See [Contributing to a project by GitH
 
 Then, if you want to keep this alive and help tp maintain this map of the current state of the art of research in open-source software, send a pull request on GitHub, and it will be merged after testing.  
 
-Knowledge of [BibTool](http://www.gerd-neugebauer.de/software/TeX/BibTool/en/) and [BibTeX Tidy](https://flamingtempura.github.io/bibtex-tidy/index.html) will not hurt. 
+Knowledge of [BibTool](http://www.gerd-neugebauer.de/software/TeX/BibTool/en/) and [BibTeX Tidy](https://flamingtempura.github.io/bibtex-tidy/index.html) will not hurt.  See [**dependencies.sh**](dependencies.sh) for an instalation script. 
 
 Avoid submitting duplicates or incomplete bibliometric entries. 
 
