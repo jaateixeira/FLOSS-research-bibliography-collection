@@ -126,8 +126,8 @@ install_bibtool() {
             
             # Install bib-tool (note: Homebrew uses bib-tool, not bibtool)
             if brew install bib-tool; then
-                print_color $GREEN "✓ bib-tool installed successfully!"
-                print_color $YELLOW "Note: On macOS, the command is 'bib-tool' not 'bibtool'"
+                print_color $GREEN "✓ bibtool is alread installed !"
+                print_color $YELLOW "Note: On macOS, the packages is called 'bib-tool' not 'bibtool'"
             else
                 print_color $RED "✗ Failed to install bib-tool via Homebrew"
                 exit 1
@@ -195,10 +195,10 @@ install_bibtool() {
     # Verify installation
     print_color $BLUE "Verifying installation..."
     if [ "$platform" = "Mac" ]; then
-        if command -v bib-tool >/dev/null 2>&1; then
-            print_color $GREEN "✓ Verification passed: bib-tool is available"
+        if command -v bibtool >/dev/null 2>&1; then
+            print_color $GREEN "✓ Verification passed: bibtool is available"
         else
-            print_color $RED "✗ bib-tool not found after installation"
+            print_color $RED "✗ bibtool not found after installation"
             exit 1
         fi
     else
@@ -225,7 +225,8 @@ fi
 # Run installation
 print_color $BLUE "Starting bibtool installation..."
 install_bibtool
-print_color $GREEN "🎉 Installation completed successfully
+print_color $GREEN "🎉 Installation completed successfully"
+print_color $GREEN "🎉 You can now format BibTeX files according to the FLOSS-research-bibliography-collection style"
 
 
 
