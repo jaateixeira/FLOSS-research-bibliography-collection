@@ -210,6 +210,20 @@ You can copy and paste this block directly into your `README.md` file.
 *   *Academy Of Management Proceedings*
 *   *European Academy of Management (EURAM) Conference*
 *   *Strategic Management Society (SMS) Annual International Conference*
+
+- [TOP_SE_J] **Top Library and Information Science Journals:**
+*   *Scientometrics* 
+*   *The Journal of Academic Librarianship* 
+*   *Journal of the Association for Information Science and Technology* 
+*   *Library Hi Tech* 
+*   *Journal of Information Science*
+*   *Online Information Review* 
+*   *Journal of Informetrics*
+*   *Journal of Librarianship and Information Science* 
+*   *Journal of Documentation*
+*   *Library Philosophy and Practice* 
+*   *Library & Information Science Research* 
+  
 ## Usage
 
 ### Directly 
