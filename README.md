@@ -41,7 +41,7 @@ This collection was originally intended for personal use but is now in the publi
 The references are organised in bibliography database files (.bib files) by topic. 
 The following bibliographic flat-file database files follow the BibTeX format. The standard is widely used and supported by reference management software (e.g., JabRef, Mendeley, Zotero, Google Scholar). 
 
-- [**floss.bib**](floss.bib) - General FLOSS research. Special issues are annotated. Top journals in Software Engineering, Information Systems, Management and Innovation Studies are widely covered.  
+- [**floss.bib**](floss.bib) - General FLOSS research. Special issues and literature reviews and are annotated. Top journals in Software Engineering, Information Systems, Information Studies, Management and Innovation Studies are widely covered.  
   
 - [**floss-coordination.bib**](floss-coordination.bib) - Studies of coordination and collaboration in FLOSS. Used on studies of coordination, collaboration and competition in the  [TensorFlow](https://users.aalto.fi/~apolinj2/tensorflowsna/), [Automotive Grade Linux](https://users.aalto.fi/~apolinj2/autogradelinuxsna/), OpenStack, Linux, Koha, WebKit software ecosystems by [Jose Teixeira](http://www.jteixeira.eu/). 
 - [**floss-diversity.bib**](floss-diversity.bib) - Diversity, Inclusiveness and inclusion in FLOSS communities. 
