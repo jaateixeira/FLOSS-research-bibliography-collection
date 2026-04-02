@@ -41,7 +41,7 @@ This collection was originally intended for personal use but is now in the publi
 The references are organised in bibliography database files (.bib files) by topic. 
 The following bibliographic flat-file database files follow the BibTeX format. The standard is widely used and supported by reference management software (e.g., JabRef, Mendeley, Zotero, Google Scholar). 
 
-- [**floss.bib**](floss.bib) - General FLOSS research. Special issues are annotated. Top journals in Software Engineering, Information Systems, Management and Innovation Studies are widely covered.  
+- [**floss.bib**](floss.bib) - General FLOSS research. Special issues and literature reviews and are annotated. Top journals in Software Engineering, Information Systems, Library & Information Science, Management and Innovation Studies are widely covered.  
   
 - [**floss-coordination.bib**](floss-coordination.bib) - Studies of coordination and collaboration in FLOSS. Used on studies of coordination, collaboration and competition in the  [TensorFlow](https://users.aalto.fi/~apolinj2/tensorflowsna/), [Automotive Grade Linux](https://users.aalto.fi/~apolinj2/autogradelinuxsna/), OpenStack, Linux, Koha, WebKit software ecosystems by [Jose Teixeira](http://www.jteixeira.eu/). 
 - [**floss-diversity.bib**](floss-diversity.bib) - Diversity, Inclusiveness and inclusion in FLOSS communities. 
@@ -210,6 +210,20 @@ You can copy and paste this block directly into your `README.md` file.
 *   *Academy Of Management Proceedings*
 *   *European Academy of Management (EURAM) Conference*
 *   *Strategic Management Society (SMS) Annual International Conference*
+
+- [TOP_LIS_J] **Top Library and Information Science Journals:**
+*   *Scientometrics* 
+*   *The Journal of Academic Librarianship* 
+*   *Journal of the Association for Information Science and Technology* 
+*   *Library Hi Tech* 
+*   *Journal of Information Science*
+*   *Online Information Review* 
+*   *Journal of Informetrics*
+*   *Journal of Librarianship and Information Science* 
+*   *Journal of Documentation*
+*   *Library Philosophy and Practice* 
+*   *Library & Information Science Research* 
+  
 ## Usage
 
 ### Directly 
