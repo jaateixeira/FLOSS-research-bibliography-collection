@@ -58,7 +58,9 @@ def validate_bibtex_file(filepath):
                 missing = [f for f in required_fields[entry_type] if f not in entry]
                 if missing:
                     warnings.append(f"Entry '{entry.get('ID', 'unknown')}' missing {missing}")
-        
+                    #print(f"Entry '{entry.get('ID', 'unknown')}' missing {missing}")
+                    #sys.exit(1)
+                
         return True, None, warnings if warnings else None
         
     except Exception as e:
