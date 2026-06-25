@@ -62,6 +62,58 @@
   comment	= {network_analyis}
 }
 
+@Article{	  BockSchmid_et_al2021,
+  author	= {Bock, Thomas and Schmid, Angelika and Apel, Sven},
+  title		= {Measuring and Modeling Group Dynamics in Open-Source
+		  Software Development: A Tensor Decomposition Approach},
+  year		= {2021},
+  issue_date	= {April 2022},
+  publisher	= {Association for Computing Machinery},
+  address	= {New York, NY, USA},
+  volume	= {31},
+  number	= {2},
+  issn		= {1049-331X},
+  doi		= {10.1145/3473139},
+  abstract	= {Many open-source software projects depend on a few core
+		  developers, who take over both the bulk of coordination and
+		  programming tasks. They are supported by peripheral
+		  developers, who contribute either via discussions or
+		  programming tasks, often for a limited time. It is unclear
+		  what role these peripheral developers play in the
+		  programming and communication efforts, as well as the
+		  temporary task-related sub-groups in the projects. We mine
+		  code-repository data and mailing-list discussions to model
+		  the relationships and contributions of developers in a
+		  social network and devise a method to analyze the temporal
+		  collaboration structures in communication and programming,
+		  learning about the strength and stability of social
+		  sub-groups in open-source software projects. Our method
+		  uses multi-modal social networks on a series of time
+		  windows. Previous work has reduced the network structure
+		  representing developer collaboration to networks with only
+		  one type of interaction, which impedes the simultaneous
+		  analysis of more than one type of interaction. We use both
+		  communication and version-control data of open-source
+		  software projects and model different types of interaction
+		  over time. To demonstrate the practicability of our
+		  measurement and analysis method, we investigate
+		  10&nbsp;substantial and popular open-source software
+		  projects and show that, if sub-groups evolve, modeling
+		  these sub-groups helps predict the future evolution of
+		  interaction levels of programmers and groups of developers.
+		  Our method allows maintainers and other stakeholders of
+		  open-source software projects to assess instabilities and
+		  organizational changes in developer interaction and can be
+		  applied to different use cases in organizational analysis,
+		  such as understanding the dynamics of a specific incident
+		  or discussion.},
+  journal	= {ACM Trans. Softw. Eng. Methodol.},
+  month		= nov,
+  articleno	= {19},
+  numpages	= {50},
+  comment	= {TOP_SE_J}
+}
+
 @Article{	  DanielMidha_et_al2018,
   title		= {Sourcing knowledge in open source software projects: The
 		  impacts of internal and external social capital on project
@@ -100,6 +152,31 @@
 		  the impact of role diversity is the most positive. We
 		  present the implications of these findings for theory and
 		  practice.}
+}
+
+@InProceedings{	  GoteScholtes_et_al2019,
+  author	= {Gote, Christoph and Scholtes, Ingo and Schweitzer, Frank},
+  booktitle	= {2019 IEEE/ACM 16th International Conference on Mining
+		  Software Repositories (MSR)},
+  title		= {git2net - Mining Time-Stamped Co-Editing Networks from
+		  Large git Repositories},
+  year		= {2019},
+  volume	= {},
+  number	= {},
+  pages		= {433-444},
+  doi		= {10.1109/MSR.2019.00070}
+}
+
+@Article{	  GoteScholtes_et_al2021,
+  title		= {Analysing time-stamped co-editing networks in software
+		  development teams using git2net},
+  author	= {Gote, Christoph and Scholtes, Ingo and Schweitzer, Frank},
+  journal	= {Empirical Software Engineering},
+  volume	= {26},
+  number	= {4},
+  pages		= {75},
+  year		= {2021},
+  publisher	= {Springer}
 }
 
 @Article{	  GrewalLilien_et_al2006,
@@ -731,56 +808,42 @@
   month		= {May}
 }
 
-
-
-@Article{	  BockSchmid_et_al2021,
-  author	= {Bock, Thomas and Schmid, Angelika and Apel, Sven},
-  title		= {Measuring and Modeling Group Dynamics in Open-Source
-		  Software Development: A Tensor Decomposition Approach},
-  year		= {2021},
-  issue_date	= {April 2022},
-  publisher	= {Association for Computing Machinery},
-  address	= {New York, NY, USA},
-  volume	= {31},
-  number	= {2},
-  issn		= {1049-331X},
-  doi		= {10.1145/3473139},
-  abstract	= {Many open-source software projects depend on a few core
-		  developers, who take over both the bulk of coordination and
-		  programming tasks. They are supported by peripheral
-		  developers, who contribute either via discussions or
-		  programming tasks, often for a limited time. It is unclear
-		  what role these peripheral developers play in the
-		  programming and communication efforts, as well as the
-		  temporary task-related sub-groups in the projects. We mine
-		  code-repository data and mailing-list discussions to model
-		  the relationships and contributions of developers in a
-		  social network and devise a method to analyze the temporal
-		  collaboration structures in communication and programming,
-		  learning about the strength and stability of social
-		  sub-groups in open-source software projects. Our method
-		  uses multi-modal social networks on a series of time
-		  windows. Previous work has reduced the network structure
-		  representing developer collaboration to networks with only
-		  one type of interaction, which impedes the simultaneous
-		  analysis of more than one type of interaction. We use both
-		  communication and version-control data of open-source
-		  software projects and model different types of interaction
-		  over time. To demonstrate the practicability of our
-		  measurement and analysis method, we investigate
-		  10&nbsp;substantial and popular open-source software
-		  projects and show that, if sub-groups evolve, modeling
-		  these sub-groups helps predict the future evolution of
-		  interaction levels of programmers and groups of developers.
-		  Our method allows maintainers and other stakeholders of
-		  open-source software projects to assess instabilities and
-		  organizational changes in developer interaction and can be
-		  applied to different use cases in organizational analysis,
-		  such as understanding the dynamics of a specific incident
-		  or discussion.},
-  journal	= {ACM Trans. Softw. Eng. Methodol.},
-  month		= nov,
-  articleno	= {19},
-  numpages	= {50},
-  comment	= {TOP_SE_J}
+@Article{	  Zingg2024,
+  doi		= {10.1371/journal.pone.0306923},
+  author	= {Zingg, Christian AND von Gernler, Alexander AND Arzig,
+		  Carsten AND Schweitzer, Frank AND Gote, Christoph},
+  journal	= {PLOS ONE},
+  publisher	= {Public Library of Science},
+  title		= {Detecting the functional interaction structure of software
+		  development teams},
+  year		= {2024},
+  month		= {10},
+  volume	= {19},
+  pages		= {1-23},
+  abstract	= {The functional interaction structure of a team captures
+		  the preferences with which members of different roles
+		  interact. This paper presents a data-driven approach to
+		  detect the functional interaction structure for software
+		  development teams from traces team members leave on
+		  development platforms during their daily work. Our approach
+		  considers differences in the activity levels of team
+		  members and uses a block-constrained configuration model to
+		  compute interaction preferences between members of
+		  different roles. We apply our approach in a case study to
+		  extract the functional interaction structure of a product
+		  team at the German IT security company genua GmbH. We
+		  validate the accuracy of the detected interaction structure
+		  in interviews with five team members. Finally, we show how
+		  our approach enables teams to compare their functional
+		  interaction structure against synthetically created
+		  benchmark scenarios. Specifically, we evaluate the level of
+		  knowledge diffusion in the team and identify areas where
+		  the team can further improve. Our approach is
+		  computationally efficient and can be applied in real-time
+		  to manage a team’s interaction structure. In summary, our
+		  approach provides a novel way to quantify and evaluate the
+		  functional interaction structure of software development
+		  teams that aids in understanding and improving team
+		  performance.},
+  number	= {10}
 }
