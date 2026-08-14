@@ -1,3 +1,4 @@
+Make a system that builts maps weekly
 Fix conference entries so they are consistent
 Create a report folder 
 Point readme to the report
