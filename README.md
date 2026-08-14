@@ -345,6 +345,34 @@ bibtool -v -d -k -r bibtoolrsc.rsc -F [in file] -o [out file]
 
 You can use the  [**format_all_bib_with_bibtool.sh**](format_all_bib_with_bibtool.sh) small bash script that formats and generate BibTeX keys for all .bib files in the directory using bibtool and the standard [**bibtoolrsc.rsc**](bibtoolrsc.rsc) configurations.
 
+### Tips
+
+Use git show <commit hash> -- <file>.bib to show what changed with a commit
+
+Use plot_n_lines_per_file.sh <file>.bib to show the evolution of line of file 
+
+For reverting commmits that accidently removed use
+
+# 1. Switch to main branch
+git checkout main
+
+# 2. Get latest changes
+git pull origin main
+
+# 3. Preview what will be reverted (optional)
+git show c57198c -- floos.bib | grep "^\-"
+
+# 4. Revert the commit
+git revert c57198c --no-edit
+
+# 5. Verify the changes
+git log -1 --stat
+
+# 6. Push to remote
+git push origin main
+
+
+
 ### Style guide for BibTeX entries 
 
 - For the 'booktitle' entry of a ICIS conference use *Proceeding of the 40th International Conference on Information Systems (ICIS 2019)*. That way we keep track of edition and year. 
