@@ -49,6 +49,18 @@ from rich.text import Text
 from unidecode import unidecode
 
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+
+# Also enable pyparsing's own debug tracing
+import pyparsing
+pyparsing.ParserElement.DEFAULT_WHITE_CHARS = "\n\t "
+pyparsing.ParserElement.enable_packrat()  # optional, faster
+
+
+
+
 # =============================================================================
 # Constants
 # =============================================================================
@@ -525,7 +537,10 @@ def process_file(
     try:
         bibdb = bibtexparser.loads(raw_text)
     except Exception as e:
+        # Extract line number and the offending line text
         result["fatal"] = f"parse failure: {e}"
+
+        
         logger.error(f"[cyan]{esc(str(bibfile))}[/] parse failure: {esc(str(e))}")
         return result
 
