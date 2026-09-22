@@ -5,8 +5,7 @@ gen-bib-keys.py — Standardize BibTeX keys in one or more .bib files.
 
 Inspired by https://github.com/jaateixeira/nameit/ :
   * nameparser.HumanName for robust author parsing
-  * loguru + RichHandler for logging
-  * rich Table / Panel / Prompt for output
+  * rich Console / Table / Panel / Prompt for output and logging
   * argparse (not typer)
   * unidecode added for proper Unicode folding
 
@@ -16,7 +15,7 @@ Key style (matching floss.bib):
   3+       : Lastname1_et_alYear
 
 Requires:
-  pip install 'bibtexparser>=1.4,<2.0' nameparser loguru rich unidecode
+  pip install 'bibtexparser>=1.4,<2.0' nameparser rich unidecode
 
 Exit codes:
   0  success (or --check and nothing to change)
@@ -37,25 +36,14 @@ from pathlib import Path
 from typing import Optional
 
 import bibtexparser
-from loguru import logger
 from nameparser import HumanName
 from rich.console import Console
-from rich.logging import RichHandler
 from rich.markup import escape as esc
 from rich.panel import Panel
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
 from rich.text import Text
 from unidecode import unidecode
-
-
-import logging
-
-
-# Also enable pyparsing's own debug tracing
-import pyparsing
-
-
 
 
 # =============================================================================
@@ -75,26 +63,44 @@ console: Console = Console()
 
 
 # =============================================================================
-# Logging
+# Rich-based logging
 # =============================================================================
 
+class RichLogger:
+    """Minimal logger that prints through Rich, with a verbosity gate."""
+
+    def __init__(self, console: Console) -> None:
+        self.console = console
+        self.verbose = False
+
+    def _emit(self, label: str, style: str, message: str) -> None:
+        prefix = f"[{style}]{label}[/]"
+        self.console.print(f"{prefix} {message}")
+
+    def debug(self, message: str) -> None:
+        if self.verbose:
+            self._emit("DEBUG", "dim cyan", message)
+
+    def info(self, message: str) -> None:
+        self._emit("INFO", "bold blue", message)
+
+    def warning(self, message: str) -> None:
+        self._emit("WARN", "bold yellow", message)
+
+    def error(self, message: str) -> None:
+        self._emit("ERROR", "bold red", message)
+
+
+log: RichLogger = RichLogger(console)
+
+
 def setup_logging(verbose: bool, output_console: Optional[Console] = None) -> None:
-    """Configure loguru with a RichHandler, same pattern as nameit."""
-    global console
+    """Configure the Rich logger (replaces loguru/rich.logging setup)."""
+    global console, log
     if output_console is not None:
         console = output_console
-    logger.remove()
-    logger.add(
-        RichHandler(
-            console=console,
-            show_time=False,
-            show_path=False,
-            rich_tracebacks=True,
-            markup=True,
-        ),
-        format="{message}",
-        level="DEBUG" if verbose else "INFO",
-    )
+    log = RichLogger(console)
+    log.verbose = verbose
 
 
 # =============================================================================
@@ -205,6 +211,76 @@ def parse_authors(author_field: str) -> list[AuthorChunk]:
 
 
 # =============================================================================
+# Debug display for a single entry (used with --verbose)
+# =============================================================================
+
+def show_entry_debug(
+    entry: dict,
+    old_key: str,
+    chunks: list[AuthorChunk],
+    clean_year: Optional[str],
+    base_key: Optional[str],
+    warnings: list[str],
+    errors: list[str],
+) -> None:
+    """Print a Rich table describing how one .bib entry was processed."""
+    table = Table(
+        title=f"[bold]Entry debug[/] — [cyan]{esc(old_key)}[/]",
+        show_header=True,
+        header_style="bold",
+        show_lines=False,
+        expand=False,
+    )
+    table.add_column("Field", style="bold", no_wrap=True)
+    table.add_column("Value", overflow="fold")
+
+    table.add_row("entry type", esc(str(entry.get("ENTRYTYPE", ""))))
+    table.add_row("old key", esc(old_key))
+    table.add_row("author", esc(str(entry.get("author", ""))))
+    table.add_row("year (raw)", esc(str(entry.get("year", ""))))
+    table.add_row("year (clean)", esc(clean_year or "—"))
+
+    # Author chunks as a nested bullet list
+    if chunks:
+        rendered_lines: list[str] = []
+        for c in chunks:
+            if c.is_others:
+                rendered_lines.append("• [dim]others[/]")
+            elif c.malformed:
+                rendered_lines.append(
+                    f"• [yellow]malformed:[/] {esc(c.raw)!r} "
+                    f"[dim]({esc(c.reason)})[/]"
+                )
+            else:
+                rendered_lines.append(
+                    f"• {esc(c.raw)!r} → [bold]{esc(c.last_name or '')}[/]"
+                )
+        table.add_row("authors", "\n".join(rendered_lines))
+    else:
+        table.add_row("authors", "[dim]—[/]")
+
+    table.add_row("base key", esc(base_key or "—"))
+
+    if warnings:
+        table.add_row(
+            "warnings",
+            "\n".join(f"[yellow]•[/] {esc(w)}" for w in warnings),
+        )
+    if errors:
+        table.add_row(
+            "errors",
+            "\n".join(f"[red]•[/] {esc(e)}" for e in errors),
+        )
+
+    # Title/other useful fields if present
+    for extra in ("title", "journal", "booktitle", "publisher"):
+        if entry.get(extra):
+            table.add_row(extra, esc(str(entry[extra])))
+
+    console.print(table)
+
+
+# =============================================================================
 # Interactive resolution
 # =============================================================================
 
@@ -273,8 +349,11 @@ def resolve_malformed_interactive(
 
 def build_base_key(
     entry: dict, interactive: bool
-) -> tuple[Optional[str], list[str], list[str]]:
-    """Return (base_key, warnings, errors). base_key is None on failure."""
+) -> tuple[Optional[str], list[str], list[str], list[AuthorChunk], Optional[str]]:
+    """Return (base_key, warnings, errors, chunks, clean_year).
+
+    base_key is None on failure.
+    """
     warnings: list[str] = []
     errors: list[str] = []
 
@@ -283,22 +362,22 @@ def build_base_key(
 
     if not author_field:
         errors.append("missing author field")
-        return None, warnings, errors
+        return None, warnings, errors, [], None
     if not year_field:
         errors.append("missing year field")
-        return None, warnings, errors
+        return None, warnings, errors, [], None
 
     clean_year, year_warn = parse_year(year_field)
     if year_warn:
         warnings.append(year_warn)
     if not clean_year:
         errors.append(f"cannot parse year: {year_field!r}")
-        return None, warnings, errors
+        return None, warnings, errors, [], None
 
     chunks = parse_authors(author_field)
     if not chunks:
         errors.append("no authors parsed")
-        return None, warnings, errors
+        return None, warnings, errors, chunks, clean_year
 
     malformed = [c for c in chunks if c.malformed]
     if malformed:
@@ -306,7 +385,7 @@ def build_base_key(
             resolved = resolve_malformed_interactive(entry, author_field, chunks)
             if resolved is None:
                 warnings.append("user chose to keep the old key")
-                return None, warnings, errors
+                return None, warnings, errors, chunks, clean_year
             chunks = resolved
         else:
             for c in malformed:
@@ -314,7 +393,7 @@ def build_base_key(
                     f"malformed author chunk: {c.raw!r} ({c.reason}); "
                     f"run with --interactive to resolve"
                 )
-            return None, warnings, errors
+            return None, warnings, errors, chunks, clean_year
 
     has_others = any(c.is_others for c in chunks)
     real = [c for c in chunks if not c.is_others and c.last_name]
@@ -322,7 +401,7 @@ def build_base_key(
 
     if not last_names:
         errors.append("no usable last names")
-        return None, warnings, errors
+        return None, warnings, errors, chunks, clean_year
 
     if has_others or len(last_names) >= 3:
         base = f"{last_names[0]}_et_al{clean_year}"
@@ -331,7 +410,7 @@ def build_base_key(
     else:
         base = f"{last_names[0]}{clean_year}"
 
-    return base, warnings, errors
+    return base, warnings, errors, chunks, clean_year
 
 
 # =============================================================================
@@ -493,7 +572,7 @@ def write_gha_summary(markdown: str) -> None:
         with open(path, "a", encoding="utf-8") as f:
             f.write(markdown)
     except OSError as e:
-        logger.warning(f"could not write GITHUB_STEP_SUMMARY: {e}")
+        log.warning(f"could not write GITHUB_STEP_SUMMARY: {esc(str(e))}")
 
 
 # =============================================================================
@@ -524,21 +603,23 @@ def process_file(
         "fatal": None,
     }
 
+    log.debug(f"Reading [cyan]{esc(str(bibfile))}[/]")
+
     try:
         raw_text = bibfile.read_text(encoding="utf-8")
     except OSError as e:
         result["fatal"] = f"cannot read: {e}"
-        logger.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
+        log.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
         return result
+
+    log.debug(f"Parsing [cyan]{esc(str(bibfile))}[/] "
+              f"({len(raw_text)} bytes) with bibtexparser")
 
     try:
         bibdb = bibtexparser.loads(raw_text)
     except Exception as e:
-        # Extract line number and the offending line text
         result["fatal"] = f"parse failure: {e}"
-
-        
-        logger.error(f"[cyan]{esc(str(bibfile))}[/] parse failure: {esc(str(e))}")
+        log.error(f"[cyan]{esc(str(bibfile))}[/] parse failure: {esc(str(e))}")
         return result
 
     entries = [
@@ -547,18 +628,21 @@ def process_file(
     ]
     result["entries"] = len(entries)
 
+    log.debug(f"Found [bold]{len(entries)}[/] non-comment entries in "
+              f"[cyan]{esc(str(bibfile))}[/]")
+
     if not entries:
-        logger.warning(f"[cyan]{esc(str(bibfile))}[/] no entries found")
+        log.warning(f"[cyan]{esc(str(bibfile))}[/] no entries found")
         result["skipped"] = True
         return result
 
     has_comments = bool(COMMENT_START_RE.search(raw_text))
     if has_comments and rewrite and apply:
         result["fatal"] = "@comment blocks would be LOST with --rewrite"
-        logger.error(f"[cyan]{esc(str(bibfile))}[/] {esc(result['fatal'])}")
+        log.error(f"[cyan]{esc(str(bibfile))}[/] {esc(result['fatal'])}")
         return result
     if has_comments:
-        logger.warning(
+        log.warning(
             f"[cyan]{esc(str(bibfile))}[/] contains @comment blocks; "
             f"they will be preserved as raw text"
         )
@@ -568,7 +652,9 @@ def process_file(
     for entry in entries:
         old_key = (entry.get("ID") or "").strip()
         item = PlanItem(entry=entry, old_key=old_key)
-        base, warns, errs = build_base_key(entry, interactive=interactive)
+        base, warns, errs, chunks, clean_year = build_base_key(
+            entry, interactive=interactive
+        )
         item.warnings.extend(warns)
         item.errors.extend(errs)
         if base:
@@ -577,12 +663,24 @@ def process_file(
             item.new_key = old_key
             item.skipped = True
 
+        # --- Per-entry debug table (only with --verbose) --------------------
+        if log.verbose:
+            show_entry_debug(
+                entry=entry,
+                old_key=old_key,
+                chunks=chunks,
+                clean_year=clean_year,
+                base_key=base,
+                warnings=item.warnings,
+                errors=item.errors,
+            )
+
         for w in item.warnings:
-            logger.warning(f"[cyan]{esc(old_key)}[/] {esc(w)}")
+            log.warning(f"[cyan]{esc(old_key)}[/] {esc(w)}")
             if gha:
                 gha_annotate("warning", f"{old_key}: {w}", file=str(bibfile))
         for e in item.errors:
-            logger.error(f"[cyan]{esc(old_key)}[/] {esc(e)}")
+            log.error(f"[cyan]{esc(old_key)}[/] {esc(e)}")
             if gha:
                 gha_annotate("error", f"{old_key}: {e}", file=str(bibfile))
 
@@ -606,17 +704,17 @@ def process_file(
     result["error_count"] = sum(1 for it in plan if it.errors)
 
     if not changes:
-        logger.info(f"[green]{esc(str(bibfile))}: no key changes needed.[/]")
+        log.info(f"[green]{esc(str(bibfile))}: no key changes needed.[/]")
         return result
 
-    logger.info(
+    log.info(
         f"[bold]{len(changes)}[/] key(s) will be renamed in "
         f"[cyan]{esc(str(bibfile))}[/]"
     )
 
     if dry_run or check or not apply:
         if dry_run:
-            logger.info("[yellow]Dry run — no file written.[/]")
+            log.info("[yellow]Dry run — no file written.[/]")
         return result
 
     # Backup
@@ -624,10 +722,10 @@ def process_file(
         backup = bibfile.with_name(bibfile.name + ".bak")
         try:
             shutil.copy2(bibfile, backup)
-            logger.info(f"Backup: [cyan]{esc(str(backup))}[/]")
+            log.info(f"Backup: [cyan]{esc(str(backup))}[/]")
         except OSError as e:
             result["fatal"] = f"backup failed: {e}"
-            logger.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
+            log.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
             return result
 
     # Apply
@@ -639,21 +737,21 @@ def process_file(
                     item.entry["ID"] = item.new_key
             with bibfile.open("w", encoding="utf-8") as f:
                 bibtexparser.dump(bibdb, f)
-            logger.info("[green]File rewritten via bibtexparser.[/]")
+            log.info("[green]File rewritten via bibtexparser.[/]")
         else:
             masked_text, masked_blocks = mask_comment_blocks(raw_text)
             new_text, found = rewrite_keys_in_text(masked_text, mapping)
             new_text = unmask_comment_blocks(new_text, masked_blocks)
             for k in sorted(set(mapping) - found):
-                logger.warning(
+                log.warning(
                     f"old key not found in raw text: [cyan]{esc(k)}[/] (kept)"
                 )
             bibfile.write_text(new_text, encoding="utf-8")
-            logger.info(f"[green]Text-substituted {len(found)} key(s).[/]")
+            log.info(f"[green]Text-substituted {len(found)} key(s).[/]")
         result["applied"] = True
     except OSError as e:
         result["fatal"] = f"write failed: {e}"
-        logger.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
+        log.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
 
     return result
 
@@ -690,7 +788,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     parser.add_argument("--gha", action="store_true",
                         help="Emit GitHub Actions annotations and write $GITHUB_STEP_SUMMARY")
     parser.add_argument("--verbose", "-v", action="store_true",
-                        help="Verbose logging")
+                        help="Verbose logging + per-entry debug tables")
     args = parser.parse_args(argv)
 
     # --check implies dry-run
@@ -707,48 +805,50 @@ def main(argv: Optional[list[str]] = None) -> int:
     setup_logging(args.verbose, output_console=console)
 
     if args.verbose:
-        "Enable debug messages"
-        logging.basicConfig(level=logging.DEBUG)
-        "Enable pyparsing debug messages"
-        pyparsing.ParserElement.DEFAULT_WHITE_CHARS = "\n\t "
-        pyparsing.ParserElement.enable_packrat()  # optional, faster
+        console.print("[dim]IN verbose mode[/]")
+        # Optional: enable pyparsing packrat for faster parsing.
+        try:
+            import pyparsing
+            pyparsing.ParserElement.enable_packrat()
+        except ImportError:
+            pass
 
     # --- CI / TTY guard ------------------------------------------------------
     if IS_CI or not IS_TTY:
         if args.interactive:
-            logger.error("--interactive cannot be used in CI / non-TTY mode.")
+            log.error("--interactive cannot be used in CI / non-TTY mode.")
             return 1
         if not args.yes:
             args.yes = True
         if not args.no_backup:
             args.no_backup = True
-        logger.info("[yellow]CI/non-TTY detected: --yes --no-backup auto-enabled.[/]")
+        log.info("[yellow]CI/non-TTY detected: --yes --no-backup auto-enabled.[/]")
 
     # --- Expand input paths --------------------------------------------------
     files: list[Path] = []
     for p in args.bibfiles:
         if p.is_dir():
             if not args.recursive:
-                logger.error(f"[cyan]{esc(str(p))}[/] is a directory; use --recursive")
+                log.error(f"[cyan]{esc(str(p))}[/] is a directory; use --recursive")
                 return 1
             files.extend(sorted(p.rglob("*.bib")))
         else:
             files.append(p)
 
     if not files:
-        logger.error("No .bib files found.")
+        log.error("No .bib files found.")
         return 1
 
     bad_ext = [f for f in files if f.suffix.lower() != ".bib"]
     if bad_ext:
         for f in bad_ext:
-            logger.error(f"not a .bib file: [cyan]{esc(str(f))}[/]")
+            log.error(f"not a .bib file: [cyan]{esc(str(f))}[/]")
         return 1
 
     missing = [f for f in files if not f.is_file()]
     if missing:
         for f in missing:
-            logger.error(f"not a file: [cyan]{esc(str(f))}[/]")
+            log.error(f"not a file: [cyan]{esc(str(f))}[/]")
         return 1
 
     console.print()
@@ -769,7 +869,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     )
 
     if not apply_now and not args.dry_run and not args.check:
-        logger.info("Aborted by user.")
+        log.info("Aborted by user.")
         return 0
 
     results: list[dict] = []
@@ -823,13 +923,13 @@ def main(argv: Optional[list[str]] = None) -> int:
     if any_fatal:
         return 1
     if args.strict and total_warnings:
-        logger.error(f"--strict: {total_warnings} warning(s) → failing.")
+        log.error(f"--strict: {total_warnings} warning(s) → failing.")
         return 1
     if args.check and total_changes:
-        logger.warning(f"--check: {total_changes} key(s) need standardization.")
+        log.warning(f"--check: {total_changes} key(s) need standardization.")
         return 2
     if args.check:
-        logger.info("[green]All keys are standardized.[/]")
+        log.info("[green]All keys are standardized.[/]")
     return 0
 
 
