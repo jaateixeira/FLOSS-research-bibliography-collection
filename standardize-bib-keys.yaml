@@ -1,0 +1,50 @@
+name: standardize-bib-keys
+
+on:
+  schedule:
+    - cron: "0 6 * * *"      # daily at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: standardize-bib-keys
+  cancel-in-progress: false
+
+jobs:
+  standardize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Standardize keys
+        run: |
+          python gen-bib-keys.py \
+            --recursive \
+            --yes --no-backup \
+            --gha \
+            --strict \
+            .
+
+      - name: Open PR if the file changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: standardize BibTeX keys"
+          title: "chore: standardize BibTeX keys"
+          body: |
+            Automated key standardization.
+            See the workflow step summary for the rename table.
+          branch: chore/standardize-bib-keys
+          delete-branch: true
+          add-paths: |
+            **/*.bib
