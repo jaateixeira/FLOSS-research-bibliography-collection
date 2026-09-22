@@ -50,13 +50,10 @@ from unidecode import unidecode
 
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
 
 
 # Also enable pyparsing's own debug tracing
 import pyparsing
-pyparsing.ParserElement.DEFAULT_WHITE_CHARS = "\n\t "
-pyparsing.ParserElement.enable_packrat()  # optional, faster
 
 
 
@@ -708,6 +705,13 @@ def main(argv: Optional[list[str]] = None) -> int:
         highlight=False,
     )
     setup_logging(args.verbose, output_console=console)
+
+    if args.verbose:
+        "Enable debug messages"
+        logging.basicConfig(level=logging.DEBUG)
+        "Enable pyparsing debug messages"
+        pyparsing.ParserElement.DEFAULT_WHITE_CHARS = "\n\t "
+        pyparsing.ParserElement.enable_packrat()  # optional, faster
 
     # --- CI / TTY guard ------------------------------------------------------
     if IS_CI or not IS_TTY:
