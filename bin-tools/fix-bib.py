@@ -650,7 +650,8 @@ def process_file(
 
     # ---- Apply repairs: write the library back ----------------------------
     try:
-        bibtexparser.write_file(bibfile, library)
+        with open(bibfile, "w", encoding="utf-8") as f:
+            bibtexparser.write_file(f, library)
         log.info(f"[green]File written with {len(result['repairs'])} repair(s).[/]")
         result["applied"] = True
     except Exception as e:
