@@ -3,19 +3,13 @@
 """
 gen-bib-keys.py — Standardize BibTeX keys in one or more .bib files.
 
-Inspired by https://github.com/jaateixeira/nameit/ :
-  * nameparser.HumanName for robust author parsing
-  * rich Console / Table / Panel / Prompt for output and logging
-  * argparse (not typer)
-  * unidecode added for proper Unicode folding
+Compatible with bibtexparser v2 (>=2.0.0b1,<3.0).
+Uses Rich for both tables and logging (no loguru, no stdlib logging).
 
 Key style (matching floss.bib):
   1 author : LastnameYear
   2 authors: Lastname1Lastname2Year
   3+       : Lastname1_et_alYear
-
-Requires:
-  pip install 'bibtexparser>=1.4,<2.0' nameparser rich unidecode
 
 Exit codes:
   0  success (or --check and nothing to change)
@@ -95,7 +89,7 @@ log: RichLogger = RichLogger(console)
 
 
 def setup_logging(verbose: bool, output_console: Optional[Console] = None) -> None:
-    """Configure the Rich logger (replaces loguru/rich.logging setup)."""
+    """Configure the Rich logger."""
     global console, log
     if output_console is not None:
         console = output_console
@@ -135,12 +129,28 @@ class AuthorChunk:
 
 @dataclass
 class PlanItem:
-    entry: dict
+    entry: object  # bibtexparser.model.Entry in v2
     old_key: str
     new_key: Optional[str] = None
     warnings: list[str] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
     skipped: bool = False
+
+
+# =============================================================================
+# v2 field helpers
+# =============================================================================
+
+def entry_get(entry, field_name: str, default: str = "") -> str:
+    """Read a field value from a bibtexparser v2 Entry object safely."""
+    fields = getattr(entry, "fields_dict", {}) or {}
+    fld = fields.get(field_name)
+    if fld is None:
+        return default
+    value = getattr(fld, "value", None)
+    if value is None:
+        return default
+    return str(value)
 
 
 # =============================================================================
@@ -215,7 +225,7 @@ def parse_authors(author_field: str) -> list[AuthorChunk]:
 # =============================================================================
 
 def show_entry_debug(
-    entry: dict,
+    entry,
     old_key: str,
     chunks: list[AuthorChunk],
     clean_year: Optional[str],
@@ -234,13 +244,12 @@ def show_entry_debug(
     table.add_column("Field", style="bold", no_wrap=True)
     table.add_column("Value", overflow="fold")
 
-    table.add_row("entry type", esc(str(entry.get("ENTRYTYPE", ""))))
+    table.add_row("entry type", esc(str(getattr(entry, "entry_type", ""))))
     table.add_row("old key", esc(old_key))
-    table.add_row("author", esc(str(entry.get("author", ""))))
-    table.add_row("year (raw)", esc(str(entry.get("year", ""))))
+    table.add_row("author", esc(entry_get(entry, "author")))
+    table.add_row("year (raw)", esc(entry_get(entry, "year")))
     table.add_row("year (clean)", esc(clean_year or "—"))
 
-    # Author chunks as a nested bullet list
     if chunks:
         rendered_lines: list[str] = []
         for c in chunks:
@@ -272,10 +281,10 @@ def show_entry_debug(
             "\n".join(f"[red]•[/] {esc(e)}" for e in errors),
         )
 
-    # Title/other useful fields if present
     for extra in ("title", "journal", "booktitle", "publisher"):
-        if entry.get(extra):
-            table.add_row(extra, esc(str(entry[extra])))
+        val = entry_get(entry, extra)
+        if val:
+            table.add_row(extra, esc(val))
 
     console.print(table)
 
@@ -285,10 +294,10 @@ def show_entry_debug(
 # =============================================================================
 
 def resolve_malformed_interactive(
-    entry: dict, author_field: str, chunks: list[AuthorChunk]
+    entry, author_field: str, chunks: list[AuthorChunk]
 ) -> Optional[list[AuthorChunk]]:
     """Ask the user how to handle a malformed author field."""
-    old_key = entry.get("ID", "?")
+    old_key = getattr(entry, "key", "?")
     console.print()
     console.rule(f"[bold yellow]Ambiguous author field[/] — [cyan]{esc(old_key)}[/]")
     console.print(f"  author = {{{esc(author_field)}}}")
@@ -348,7 +357,7 @@ def resolve_malformed_interactive(
 # =============================================================================
 
 def build_base_key(
-    entry: dict, interactive: bool
+    entry, interactive: bool
 ) -> tuple[Optional[str], list[str], list[str], list[AuthorChunk], Optional[str]]:
     """Return (base_key, warnings, errors, chunks, clean_year).
 
@@ -357,8 +366,8 @@ def build_base_key(
     warnings: list[str] = []
     errors: list[str] = []
 
-    author_field = (entry.get("author") or "").strip()
-    year_field = (entry.get("year") or "").strip()
+    author_field = entry_get(entry, "author").strip()
+    year_field = entry_get(entry, "year").strip()
 
     if not author_field:
         errors.append("missing author field")
@@ -613,22 +622,30 @@ def process_file(
         return result
 
     log.debug(f"Parsing [cyan]{esc(str(bibfile))}[/] "
-              f"({len(raw_text)} bytes) with bibtexparser")
+              f"({len(raw_text)} bytes) with bibtexparser v2")
 
+    # ---- v2 parsing entry point -------------------------------------------
     try:
-        bibdb = bibtexparser.loads(raw_text)
+        library = bibtexparser.parse_string(raw_text)
     except Exception as e:
         result["fatal"] = f"parse failure: {e}"
         log.error(f"[cyan]{esc(str(bibfile))}[/] parse failure: {esc(str(e))}")
         return result
 
-    entries = [
-        e for e in bibdb.entries
-        if (e.get("ENTRYTYPE", "") or "").lower() != "comment"
-    ]
+    # ---- v2 fault tolerance: inspect failed_blocks ------------------------
+    failed = getattr(library, "failed_blocks", None) or []
+    if failed:
+        for fb in failed:
+            line = getattr(fb, "start_line", "?")
+            log.warning(
+                f"[cyan]{esc(str(bibfile))}[/] failed block at line {line}"
+            )
+        # We continue: v2 recovers and keeps the rest of the file.
+
+    entries = list(getattr(library, "entries", []) or [])
     result["entries"] = len(entries)
 
-    log.debug(f"Found [bold]{len(entries)}[/] non-comment entries in "
+    log.debug(f"Found [bold]{len(entries)}[/] entries in "
               f"[cyan]{esc(str(bibfile))}[/]")
 
     if not entries:
@@ -647,10 +664,11 @@ def process_file(
             f"they will be preserved as raw text"
         )
 
-    # Build plan
+    # ---- Build plan -------------------------------------------------------
     plan: list[PlanItem] = []
     for entry in entries:
-        old_key = (entry.get("ID") or "").strip()
+        # v2: entry.key instead of entry.get("ID")
+        old_key = (getattr(entry, "key", "") or "").strip()
         item = PlanItem(entry=entry, old_key=old_key)
         base, warns, errs, chunks, clean_year = build_base_key(
             entry, interactive=interactive
@@ -728,16 +746,16 @@ def process_file(
             log.error(f"[cyan]{esc(str(bibfile))}[/] {esc(str(e))}")
             return result
 
-    # Apply
+    # ---- Apply ------------------------------------------------------------
     mapping = {it.old_key: it.new_key for it in changes if it.new_key}
     try:
         if rewrite:
+            # v2: mutate Entry.key, then write via write_file / write_string
             for item in plan:
                 if item.new_key:
-                    item.entry["ID"] = item.new_key
-            with bibfile.open("w", encoding="utf-8") as f:
-                bibtexparser.dump(bibdb, f)
-            log.info("[green]File rewritten via bibtexparser.[/]")
+                    item.entry.key = item.new_key
+            bibtexparser.write_file(bibfile, library)
+            log.info("[green]File rewritten via bibtexparser v2.[/]")
         else:
             masked_text, masked_blocks = mask_comment_blocks(raw_text)
             new_text, found = rewrite_keys_in_text(masked_text, mapping)
@@ -806,12 +824,6 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.verbose:
         console.print("[dim]IN verbose mode[/]")
-        # Optional: enable pyparsing packrat for faster parsing.
-        try:
-            import pyparsing
-            pyparsing.ParserElement.enable_packrat()
-        except ImportError:
-            pass
 
     # --- CI / TTY guard ------------------------------------------------------
     if IS_CI or not IS_TTY:

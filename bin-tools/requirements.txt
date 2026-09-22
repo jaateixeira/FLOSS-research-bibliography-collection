@@ -1,4 +1,4 @@
-bibtexparser==2.0.1
+bibtexparser>=2.0.0b1,<3.0
 loguru==0.7.3
 matplotlib==3.11.2
 nameparser==2.3.0
