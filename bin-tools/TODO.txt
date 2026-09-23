@@ -1,0 +1,9 @@
+Script to remove duplicates
+ERROR: same doi
+same url
+same title
+same key
+
+Warning: 
+Same year same journals same author
+same year and same month and same authors
