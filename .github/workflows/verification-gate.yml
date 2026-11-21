@@ -1,0 +1,59 @@
+name: Verification gate
+
+# Fails when an AI-generated entry in a curated .bib file has no valid
+# `verified` stamp (see bin-tools/promote-bib.py and bin-tools/README.md).
+# Only the curated top-level *.bib files are checked; the candidate files in
+# ai_slop/ are expected to be unstamped until they are verified and promoted.
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '*.bib'
+      - 'bin-tools/promote-bib.py'
+      - 'bin-tools/dedup-bib.py'
+      - '.github/workflows/verification-gate.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - '*.bib'
+      - 'bin-tools/promote-bib.py'
+      - 'bin-tools/dedup-bib.py'
+      - '.github/workflows/verification-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install "bibtexparser>=2.0.0b1,<3.0" rich Unidecode
+
+    - name: Offline tests for the bib tools
+      run: |
+        pip install pytest
+        python -m pytest -q acceptance_tests
+
+    - name: Check that AI-generated entries are verified and stamped
+      run: |
+        python bin-tools/promote-bib.py check ./*.bib --gha --report promote-check.md
+
+    - name: Upload gate report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: promote-check-report
+        path: promote-check.md
+        retention-days: 7
+        if-no-files-found: ignore
