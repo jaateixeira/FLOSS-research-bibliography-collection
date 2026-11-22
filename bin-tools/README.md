@@ -109,3 +109,91 @@ python -m pytest -q acceptance_tests
 
 The suites use a fake transport, so they need no network or API keys. The live
 `--verify` and `verify-bib` paths have not yet been exercised against the real APIs.
+
+
+## cite-check.py: do the citations in a paper reflect their sources?
+
+The tools above check the bibliography. `cite-check.py` checks the paper: for every
+`\cite`-style command in a `.tex` file it takes the sentence that carries the
+citation, finds the cited work in your `.bib` file(s), gets what it can read of that
+work, and asks a language model whether the source supports the sentence. It follows
+`\input`/`\include`, reads `\bibliography{...}` and `\addbibresource{...}`, and skips
+comments, verbatim blocks and the preamble.
+
+Each citation gets a status and a reason:
+
+| Status | Meaning |
+|---|---|
+| `VERIFIED` | the source supports the sentence, and the quote the model gave as evidence is really in the source text |
+| `PARTIAL` | the source supports only part of the sentence, or something weaker |
+| `MISMATCH` | the source contradicts the sentence, or (full text read in full) does not support it |
+| `UNVERIFIED` | could not be checked; the reason says why |
+
+`UNVERIFIED` reasons: `NO_SOURCE_ACCESS` (no local copy, no open-access full text, no
+abstract in Crossref/OpenAlex), `ABSTRACT_INCONCLUSIVE` (only the abstract was available
+and it says nothing either way), `AI_ABSTRACT_ONLY` (the only abstract is AI-written),
+`SOURCE_MISMATCH` (the DOI or title led to a different work), `NOT_FOUND_IN_EXCERPTS`
+(long full text, no supporting passage among the excerpts read), `QUOTE_NOT_IN_SOURCE`
+(the model quoted text that is not there, so its answer was not trusted), `NO_BIB_ENTRY`,
+`NO_PDF_EXTRACTOR`, `NO_LLM` and `LLM_ERROR`.
+
+**What counts as the source**, best first:
+
+1. a local file: `--sources DIR` with `<key>.pdf` (or the DOI with `/` replaced by `_`; also `.txt`, `.md`, `.html`), or the path in the entry's `file` field;
+2. a Markdown file in `--markdown-dir DIR` (one or more folders): named after the cite key or the DOI, or with `key`, `citekey`, `doi` or `title` in its YAML front matter, or whose first `# heading` is the work's title. Front matter, images and HTML comments are dropped before the text is read;
+3. with `--consensus`, the open-access full text from the Consensus API, by DOI;
+4. with `--fetch-fulltext`, an open-access PDF from arXiv, Semantic Scholar (`--semantic-scholar`) or Unpaywall (needs `--mailto`);
+5. the abstract from Crossref/OpenAlex (and Semantic Scholar) by DOI;
+6. the abstract in the `.bib` entry, unless it is AI-written (`[Paraphrase]` or a `generated_by_*` tag).
+
+PDF text needs `pdftotext` (poppler) or `pypdf`.
+
+**Online services.** Both are opt-in, because they send DOIs and sentences to a third party and may be billed.
+
+| Option | Service | Key |
+|---|---|---|
+| `--consensus` | Consensus `GET /v1/papers/full_text` (open-access papers as Markdown) | `--consensus-key` or `$CONSENSUS_API_KEY`, created at consensus.app/api-mcp |
+| `--semantic-scholar` | Semantic Scholar: abstracts, open-access PDF links, and passages that match each sentence (`/snippet/search`) | optional: `--s2-key` or `$SEMANTIC_SCHOLAR_API_KEY` (much higher limits) |
+
+Passages are not the whole paper, so with them "not supported" is reported as `NOT_FOUND_IN_EXCERPTS`, never as `MISMATCH`. A refused key switches that service off for the rest of the run. The Consensus answer format is read tolerantly (it looks for `status`, and for Markdown text or sections), and neither service was reachable when this was written, so try a short run first.
+
+```
+# the cited papers exported as Markdown (e.g. from Zotero, Obsidian or a PDF converter)
+python bin-tools/cite-check.py paper.tex --markdown-dir papers-md/
+
+# fill the gaps from Consensus and Semantic Scholar
+python bin-tools/cite-check.py paper.tex --markdown-dir papers-md/ --consensus --semantic-scholar
+```
+
+An abstract can show that a sentence is supported but not that it is unsupported, so
+with an abstract only, "not supported" is reported as `ABSTRACT_INCONCLUSIVE`, never as
+`MISMATCH`.
+
+**Models.** Nothing extra to install; HTTP uses the standard library.
+
+```
+export ANTHROPIC_API_KEY=...                                  # remote: --llm anthropic (default model claude-sonnet-5-5)
+python bin-tools/cite-check.py paper.tex
+
+python bin-tools/cite-check.py paper.tex --llm ollama --model llama3.1:8b     # local, nothing leaves your machine
+python bin-tools/cite-check.py paper.tex --llm openai --base-url http://localhost:8000/v1 --model my-model   # llama.cpp, vLLM, LM Studio, OpenAI
+python bin-tools/cite-check.py paper.tex --llm none --sources papers/   # which citations can be checked at all?
+```
+
+Other options: `--bib FILE.bib`, `--only KEY...`, `--limit N`, `--registry crossref|openalex|both|none`,
+`--no-search`, `--max-chars N` (source text sent per citation, default 12000; small local
+models may need less), `--problems-only`, `--report FILE.md`, `--json`, `--gha`,
+`--check` (exit 2 on `MISMATCH`; with `--strict` also on `PARTIAL`/`UNVERIFIED`),
+`--no-cache`/`--refresh`. Model answers are cached in `~/.cache/cite-check/`.
+
+`--mark` writes `paper.checked.tex` next to the input, with a comment line after every
+checked citation, for example `% cite-check: smith2020 VERIFIED(abstract (Crossref))`.
+The original is never changed.
+
+**Limits to keep in mind.** A language model judges the sentence, so `VERIFIED` means
+"the model found a passage that supports it, and the passage exists", not proof. Read
+`PARTIAL` and `MISMATCH` yourself before changing the text. A sentence that cites several
+works is judged as a whole against each of them. The text of the sources is sent to the
+model you choose; use a local model for papers that must not leave your machine. The
+offline tests (`acceptance_tests/test_cite_check_offline.py`) use fake transports; the
+live APIs and real models have not been exercised.
